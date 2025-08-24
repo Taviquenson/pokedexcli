@@ -19,9 +19,19 @@ func startRepl() {
 			continue
 		}
 
-		command := userWords[0]
+		commandName := userWords[0]
 
-		fmt.Printf("Your command was: %v\n", command)
+		command, ok := getCommands()[commandName]
+		if ok {
+			err := command.callback()
+			if err != nil {
+				fmt.Println(err)
+			}
+			continue
+		} else {
+			fmt.Println("Unknown command")
+			continue
+		}
 	}
 }
 
@@ -31,4 +41,29 @@ func cleanInput(text string) []string {
 		subStrs[i] = strings.ToLower(str)
 	}
 	return subStrs
+}
+
+type cliCommand struct {
+	name        string
+	description string
+	callback    func() error
+}
+
+// Using a function that returns the map of commands to avoid having
+// to deal with an initialization loop that would happen because
+// in the map there's a reference to the help command and in the help
+// command there would be a reference to the map
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
+		"help": {
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
+		},
+	}
 }
