@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func startRepl() {
+func startRepl(config *pokeapi.Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
@@ -24,7 +24,6 @@ func startRepl() {
 		command, ok := getCommands()[commandName]
 		if ok {
 			// var config *pokeapi.Config // this is not initialized
-			config := &pokeapi.Config{}
 			err := command.callback(config)
 			if err != nil {
 				fmt.Println(err)
@@ -69,7 +68,7 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "Shows a list of Pokemon locations",
+			description: "Shows a list of Pokemon locations and advances the list 20 at a time",
 			callback:    pokeapi.PokeMap,
 		},
 	}

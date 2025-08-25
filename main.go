@@ -1,5 +1,8 @@
 package main
 
+import "internal/pokeapi"
+
 func main() {
-	startRepl()
+	config := &pokeapi.Config{}
+	startRepl(config)
 }
