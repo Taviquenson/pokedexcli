@@ -3,13 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"internal/pokeapi"
 	"os"
 	"strings"
 )
 
 func startRepl() {
 	scanner := bufio.NewScanner(os.Stdin)
-
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan() // advances the Scanner to the next line
@@ -64,6 +64,11 @@ func getCommands() map[string]cliCommand {
 			name:        "exit",
 			description: "Exit the Pokedex",
 			callback:    commandExit,
+		},
+		"map": {
+			name:        "map",
+			description: "Shows a list of Pokemon locations",
+			callback:    pokeapi.PokeMap,
 		},
 	}
 }
