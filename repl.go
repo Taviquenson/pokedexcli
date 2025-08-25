@@ -68,8 +68,13 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "Shows a list of Pokemon locations and advances the list 20 at a time",
+			description: "Shows a list of locations and advances the list 20 at a time",
 			callback:    pokeapi.PokeMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Moves back in a list of locations 20 at a time",
+			callback:    pokeapi.PokeMapB,
 		},
 	}
 }

@@ -5,6 +5,11 @@ type Config struct {
 	Previous *string
 }
 
+var PokeConfig = Config{
+	Next:     "https://pokeapi.co/api/v2/location-area?offset=0&limit=20",
+	Previous: nil,
+}
+
 type LocationAreas struct {
 	Count    int     `json:"count"`
 	Next     string  `json:"next"`
