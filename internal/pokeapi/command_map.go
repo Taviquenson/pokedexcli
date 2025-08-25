@@ -1,14 +1,15 @@
 package pokeapi
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 )
 
-func PokeMap() error {
-	res, err := http.Get("http://www.google.com/robots.txt")
+func PokeMap(config *Config) error {
+	res, err := http.Get("https://pokeapi.co/api/v2/location-area")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -20,6 +21,15 @@ func PokeMap() error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%s", body)
+	locationAreas := LocationAreas{}
+	err = json.Unmarshal(body, &locationAreas)
+	if err != nil {
+		fmt.Println(err)
+	}
+	config.Next = locationAreas.Next
+	config.Previous = locationAreas.Previous
+	for i := range locationAreas.Results {
+		fmt.Println(locationAreas.Results[i].Name)
+	}
 	return nil
 }

@@ -23,7 +23,9 @@ func startRepl() {
 
 		command, ok := getCommands()[commandName]
 		if ok {
-			err := command.callback()
+			// var config *pokeapi.Config // this is not initialized
+			config := &pokeapi.Config{}
+			err := command.callback(config)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -46,7 +48,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(config *pokeapi.Config) error
 }
 
 // Using a function that returns the map of commands to avoid having
