@@ -17,7 +17,7 @@ func Maps(config *Config) error {
 	bodyEntry, exists := pokeCache.Get(config.Next)
 	if exists {
 		listLocations(bodyEntry, config)
-		fmt.Println("Was in cache")
+		// fmt.Println("Was in cache")
 		return nil
 	} else { // add to cache
 		body, err := getBody(config, false)
@@ -27,7 +27,7 @@ func Maps(config *Config) error {
 
 		pokeCache.Add(config.Next, body)
 		listLocations(body, config)
-		fmt.Println("Wasn't in cache")
+		// fmt.Println("Wasn't in cache")
 		return nil
 	}
 }
@@ -40,7 +40,7 @@ func MapsB(config *Config) error {
 	bodyEntry, exists := pokeCache.Get(*config.Previous)
 	if exists {
 		listLocations(bodyEntry, config)
-		fmt.Println("Was in cache")
+		// fmt.Println("Was in cache")
 		return nil
 	} else { // add to cache
 		body, err := getBody(config, true)
@@ -50,7 +50,7 @@ func MapsB(config *Config) error {
 
 		pokeCache.Add(*config.Previous, body)
 		listLocations(body, config)
-		fmt.Println("Wasn't in cache")
+		// fmt.Println("Wasn't in cache")
 		return nil
 	}
 }

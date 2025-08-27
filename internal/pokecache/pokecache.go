@@ -49,7 +49,7 @@ func (cache *Cache) reapLoop(interval time.Duration) {
 	for t := range ticker.C { // t saves the time of the tick
 		cache.mu.Lock()
 		for key, val := range cache.entries {
-			if t.Sub(val.createdAt).Seconds() > 20 { // if cache entry is older than 5 secs
+			if t.Sub(val.createdAt) > interval { // if cache entry is older than 5 secs
 				delete(cache.entries, key)
 				// fmt.Printf("\nDeleted from cache:\n%v | %v entries left\n", key, len(cache.entries))
 			}
