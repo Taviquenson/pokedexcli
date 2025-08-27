@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"internal/pokeapi"
+	"github.com/Taviquenson/pokedexcli/internal/pokeapi"
 	"os"
 	"strings"
 )

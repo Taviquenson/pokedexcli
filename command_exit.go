@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"internal/pokeapi"
 	"os"
+
+	"github.com/Taviquenson/pokedexcli/internal/pokeapi"
 )
 
 func commandExit(config *pokeapi.Config) error {

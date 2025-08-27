@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"internal/pokeapi"
+	"github.com/Taviquenson/pokedexcli/internal/pokeapi"
 )
 
 func commandHelp(config *pokeapi.Config) error {
