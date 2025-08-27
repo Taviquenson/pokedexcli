@@ -3,18 +3,17 @@ package pokeapi
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Taviquenson/pokedexcli/internal/pokecache"
 	"io"
 	"log"
 	"net/http"
 	"time"
-
-	"github.com/Taviquenson/pokedexcli/internal/pokecache"
 )
 
-var pokeCache = pokecache.NewCache(5 * time.Second)
+var mapCache = pokecache.NewCache(5 * time.Second)
 
-func Maps(config *Config) error {
-	bodyEntry, exists := pokeCache.Get(config.Next)
+func Maps(config *Config, cmdParams ...string) error {
+	bodyEntry, exists := mapCache.Get(config.Next)
 	if exists {
 		listLocations(bodyEntry, config)
 		// fmt.Println("Was in cache")
@@ -25,19 +24,19 @@ func Maps(config *Config) error {
 			log.Fatal(err)
 		}
 
-		pokeCache.Add(config.Next, body)
+		mapCache.Add(config.Next, body)
 		listLocations(body, config)
 		// fmt.Println("Wasn't in cache")
 		return nil
 	}
 }
 
-func MapsB(config *Config) error {
+func MapsB(config *Config, cmdParams ...string) error {
 	if config.Previous == nil {
 		fmt.Println("you're on the first page")
 		return nil
 	}
-	bodyEntry, exists := pokeCache.Get(*config.Previous)
+	bodyEntry, exists := mapCache.Get(*config.Previous)
 	if exists {
 		listLocations(bodyEntry, config)
 		// fmt.Println("Was in cache")
@@ -48,7 +47,7 @@ func MapsB(config *Config) error {
 			log.Fatal(err)
 		}
 
-		pokeCache.Add(*config.Previous, body)
+		mapCache.Add(*config.Previous, body)
 		listLocations(body, config)
 		// fmt.Println("Wasn't in cache")
 		return nil

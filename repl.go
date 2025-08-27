@@ -3,9 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/Taviquenson/pokedexcli/internal/pokeapi"
 	"os"
 	"strings"
+
+	"github.com/Taviquenson/pokedexcli/internal/pokeapi"
 )
 
 func startRepl(config *pokeapi.Config) {
@@ -20,11 +21,12 @@ func startRepl(config *pokeapi.Config) {
 		}
 
 		commandName := userWords[0]
+		commandParameters := userWords[1:]
 
 		command, ok := getCommands()[commandName]
 		if ok {
 			// var config *pokeapi.Config // this is not initialized
-			err := command.callback(config)
+			err := command.callback(config, commandParameters...)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -47,7 +49,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(config *pokeapi.Config) error
+	callback    func(config *pokeapi.Config, cmdParams ...string) error
 }
 
 // Using a function that returns the map of commands to avoid having
@@ -75,6 +77,11 @@ func getCommands() map[string]cliCommand {
 			name:        "mapb",
 			description: "Moves back in a list of locations 20 at a time",
 			callback:    pokeapi.MapsB,
+		},
+		"explore": {
+			name:        "explore",
+			description: "Lists the Pokemon in the area given as a second parameter\n    e.g.\n\texplore pastoria-city-area",
+			callback:    pokeapi.Explore,
 		},
 	}
 }
