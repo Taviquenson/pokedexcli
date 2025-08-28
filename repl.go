@@ -70,7 +70,7 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "Shows a list of locations and advances the list 20 at a time",
+			description: "Shows a list of 20 locations and advances the list 20 at a time",
 			callback:    pokeapi.Maps,
 		},
 		"mapb": {
