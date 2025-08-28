@@ -83,5 +83,10 @@ func getCommands() map[string]cliCommand {
 			description: "Lists the Pokemon in the area given as a second parameter\n    e.g.\n\texplore pastoria-city-area",
 			callback:    pokeapi.Explore,
 		},
+		"catch": {
+			name:        "catch",
+			description: "Attempts to catch the pokemon given as a second parameter",
+			callback:    pokeapi.Catch,
+		},
 	}
 }

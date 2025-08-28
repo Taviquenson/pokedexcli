@@ -3,12 +3,8 @@ package pokeapi
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"log"
-	"net/http"
-	"time"
-
 	"github.com/Taviquenson/pokedexcli/internal/pokecache"
+	"time"
 )
 
 var exploreCache = pokecache.NewCache(5 * time.Second)
@@ -24,19 +20,9 @@ func Explore(config *Config, cmdParams ...string) error {
 		// fmt.Println("Was in cache")
 		return nil
 	} else { // add to cache
-		res, err := http.Get(BaseURL + "/" + areaName)
+		body, err := getBody("location-area", areaName)
 		if err != nil {
-			log.Fatal(err)
-		}
-		body, err := io.ReadAll(res.Body)
-		res.Body.Close()
-		if res.StatusCode == 404 {
-			return fmt.Errorf("error: Area name not found.\nFor a list of valid areas use command 'map'")
-		} else if res.StatusCode > 299 {
-			return fmt.Errorf("Response failed with status code: %d and\nbody: %s\n", res.StatusCode, body)
-		}
-		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		exploreCache.Add(areaName, body)
 		listPokemon(body)

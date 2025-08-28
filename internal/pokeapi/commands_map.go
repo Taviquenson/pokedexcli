@@ -3,11 +3,12 @@ package pokeapi
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Taviquenson/pokedexcli/internal/pokecache"
 	"io"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/Taviquenson/pokedexcli/internal/pokecache"
 )
 
 var mapCache = pokecache.NewCache(5 * time.Second)
@@ -19,7 +20,7 @@ func Maps(config *Config, cmdParams ...string) error {
 		// fmt.Println("Was in cache")
 		return nil
 	} else { // add to cache
-		body, err := getBody(config, false)
+		body, err := getMapBody(config, false)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -42,7 +43,7 @@ func MapsB(config *Config, cmdParams ...string) error {
 		// fmt.Println("Was in cache")
 		return nil
 	} else { // add to cache
-		body, err := getBody(config, true)
+		body, err := getMapBody(config, true)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -54,7 +55,7 @@ func MapsB(config *Config, cmdParams ...string) error {
 	}
 }
 
-func getBody(config *Config, isMapb bool) ([]byte, error) {
+func getMapBody(config *Config, isMapb bool) ([]byte, error) {
 	var res *http.Response
 	var err error
 	if isMapb {
