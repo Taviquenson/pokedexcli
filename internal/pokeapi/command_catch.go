@@ -8,8 +8,6 @@ import (
 	"time"
 )
 
-var pokedex = make(map[string]Pokemon)
-
 // Create a local RNG with a dynamic seed
 // (to control seeding for reproducibility or isolated RNG streams)
 var rng = rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -30,11 +28,13 @@ func Catch(config *Config, cmdParams ...string) error {
 		fmt.Println(err)
 	}
 
+	fmt.Printf("Throwing a Pokeball at %s...\n", pokemonName)
 	if wasCaught(pokemon.BaseExperience) {
-		pokedex[pokemonName] = pokemon
-		fmt.Printf("%s was caught!\n", pokedex[pokemonName].Name)
+		Pokedex[pokemonName] = pokemon
+		fmt.Printf("%s was caught!\n", Pokedex[pokemonName].Name)
+		fmt.Println("You may now inspect it with the inspect command")
 	} else {
-		fmt.Printf("%s wasn't caught!\n", pokemonName)
+		fmt.Printf("%s escaped!\n", pokemonName)
 	}
 
 	return nil
@@ -58,6 +58,6 @@ func wasCaught(exp int) bool {
 	// Map bias [0,1] to [0.25, 1.0]
 	minVal, maxVal := 0.25, 1.0
 	captureChance := minVal + (maxVal-minVal)*bias
-	fmt.Println(captureChance)
+	// fmt.Println(captureChance)
 	return captureChance > 0.75
 }

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/Taviquenson/pokedexcli/internal/pokeapi"
+	"github.com/Taviquenson/pokedexcli/internal/pokedex"
 )
 
 func startRepl(config *pokeapi.Config) {
@@ -52,6 +53,7 @@ type cliCommand struct {
 	callback    func(config *pokeapi.Config, cmdParams ...string) error
 }
 
+// NOTE ON INITIALIZATION LOOP AVOIDANCE
 // Using a function that returns the map of commands to avoid having
 // to deal with an initialization loop that would happen because
 // in the map there's a reference to the help command and in the help
@@ -87,6 +89,16 @@ func getCommands() map[string]cliCommand {
 			name:        "catch",
 			description: "Attempts to catch the pokemon given as a second parameter",
 			callback:    pokeapi.Catch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "Inspects the pokemon given as a second parameter if it is in the pokedex",
+			callback:    pokedex.Inspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Lists all the pokemon you've caught",
+			callback:    pokedex.ListPokedex,
 		},
 	}
 }

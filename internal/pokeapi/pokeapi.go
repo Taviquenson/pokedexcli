@@ -34,6 +34,8 @@ type Pokemon struct {
 	} `json:"types"`
 }
 
+var Pokedex = make(map[string]Pokemon)
+
 type LocationAreas struct {
 	Count    int     `json:"count"`
 	Next     string  `json:"next"`
